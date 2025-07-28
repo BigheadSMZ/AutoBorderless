@@ -6,6 +6,7 @@ namespace AutoBorderless
     internal class Forms
     {
         public static Form_MainMenu MainDialog = null;
+        public static Form_OkayMenu OkayDialog = null;
 
         public static void Initialize()
         {
@@ -14,6 +15,7 @@ namespace AutoBorderless
                 // Create the dialog and show it.
                 Config.MenuShown = true;
                 Forms.MainDialog = new Form_MainMenu();
+                Forms.OkayDialog = new Form_OkayMenu();
                 Forms.MainDialog.Text = "AutoBorderless v" + Config.Version;
                 Forms.MainDialog.ShowDialog();
 
@@ -29,8 +31,12 @@ namespace AutoBorderless
 
             // Check to see if the path to the game is valid based on what is entered.
             if (!pathToGame.TestPath())
+            {
+                string Title = "Executable Not Found";
+                string Message = "The name entered in the \"Executable\" field is invalid. Please check the spelling and make sure it exists.";
+                Forms.OkayDialog.Display(Title, Message, 260, 32, 24, 16, 10);
                 return;
-
+            }
             // Create a new openfolder dialog.
             FolderSelectDialog folderDialog = new FolderSelectDialog();
             folderDialog.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);

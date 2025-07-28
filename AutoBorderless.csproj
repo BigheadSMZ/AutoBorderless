@@ -69,6 +69,12 @@
     <Compile Include="Forms\Form_MainMenu.Designer.cs">
       <DependentUpon>Form_MainMenu.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\Form_OkayMenu.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Form_OkayMenu.Designer.cs">
+      <DependentUpon>Form_OkayMenu.cs</DependentUpon>
+    </Compile>
     <Compile Include="Functions\Extensions.cs" />
     <Compile Include="Functions\FileItem.cs" />
     <Compile Include="Functions\FolderDialog.cs" />
@@ -82,6 +88,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Forms\Form_MainMenu.resx">
       <DependentUpon>Form_MainMenu.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Form_OkayMenu.resx">
+      <DependentUpon>Form_OkayMenu.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
