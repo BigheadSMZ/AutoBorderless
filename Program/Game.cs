@@ -11,10 +11,10 @@ namespace AutoBorderless
         private static int MaxLoops = 200;
         private static int LoopDelay = 50;
 
-        public static void Initialize()
+        public static void SetBorderless(bool forceRun = false)
         {
             // If the menu was shown to the user, don't try to do any automated tasks.
-            if (Config.MenuShown)
+            if (Config.MenuShown && forceRun == false)
                 return;
 
             // Assemble where the executable should be.
@@ -24,23 +24,6 @@ namespace AutoBorderless
             if (pathToGame.TestPath())
                 Game.LaunchExecutable(pathToGame);
             else if (BorderlessINI.SearchString != "")
-                Game.SearchForString(BorderlessINI.SearchString);
-        }
-
-        public static void ButtonLaunch()
-        {
-            // Assemble where the executable should be.
-            string pathToGame = Config.BasePath + "\\" + BorderlessINI.Executable + ".exe";
-
-            // If an executable exists, launch it.
-            if (pathToGame.TestPath())
-                Game.LaunchExecutable(pathToGame);
-        }
-
-        public static void ButtonSearch()
-        {
-            // If a search string exists, then look for it.
-            if (BorderlessINI.SearchString != "")
                 Game.SearchForString(BorderlessINI.SearchString);
         }
 

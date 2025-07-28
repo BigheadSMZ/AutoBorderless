@@ -56,12 +56,12 @@ namespace AutoBorderless
 
         private void Button_Launch_Click(object sender, EventArgs e)
         {
-            Game.ButtonLaunch();
+            Game.SetBorderless(true);
         }
 
         private void Button_Search_Click(object sender, EventArgs e)
         {
-            Game.ButtonSearch();
+            Game.SetBorderless(true);
         }
 
         private void Button_Close_Click(object sender, EventArgs e)

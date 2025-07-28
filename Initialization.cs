@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace AutoBorderless
@@ -24,7 +21,9 @@ namespace AutoBorderless
             // Initialize.
             BorderlessINI.Initialize();
             Forms.Initialize();
-            Game.Initialize();
+
+            // Try to set borderless to something.
+            Game.SetBorderless();
         }
     }
 }
