@@ -23,26 +23,53 @@ namespace AutoBorderless
                 Game.LoopDelay = 50;
         }
 
-        public static void SetBorderless(bool forceRun = false)
+        private static bool ValidateSetBorderless(string exePath, bool forceRun)
         {
-            // If neither values exist, then let the user know.
-            if (BorderlessINI.Executable == "" & BorderlessINI.SearchString == "" & forceRun )
+            // GUI was shown then closed. This check skips the launch in "Initialization".
+            if (Config.MenuShown & forceRun == false)
+                return false;
+
+            // Launched from GUI and both fields are empty.
+            if (forceRun & BorderlessINI.Executable == "" & BorderlessINI.SearchString == "")
             {
                 string Title = "Values Empty";
-                string Message = "You must either enter a name of an executable to launch or an executable or window title to search for.";
+                string Message = "You must either enter the name of an executable to launch or an executable/window title to search for.";
                 Forms.OkayDialog.Display(Title, Message, 260, 32, 24, 16, 10);
-                return;
+                return false;
             }
-            // If the menu was shown to the user, don't try to do any automated tasks.
-            if (Config.MenuShown & forceRun == false)
-                return;
+            // Executable path set but not valid and search string is empty.
+            if (BorderlessINI.Executable != "" & !exePath.TestPath() & BorderlessINI.SearchString == "")
+            {
+                string Title = "Executable Not Found";
+                string Message = "The value entered for \"Executable\" was not found. It must exist in the same path as this application.";
+                Forms.OkayDialog.Display(Title, Message, 256, 32, 24, 16, 10);
+                return false;
+            }
+            // The path to the executable is this application.
+            if (exePath == Config.AppPath)
+            {
+                string Title = "Nope Not Happening";
+                string Message = "Nice try. AutoBorderless can not launch itself.";
+                Forms.OkayDialog.Display(Title, Message, 256, 32, 38, 26, 10);
+                return false;
+            }
 
+            // If none of that happened try to apply borderless.
+            return true;
+        }
+
+        public static void SetBorderless(bool forceRun = false)
+        {
             // Assemble where the executable should be.
-            string pathToGame = Config.BasePath + "\\" + BorderlessINI.Executable + ".exe";
+            string exePath = Config.BasePath + "\\" + BorderlessINI.Executable + ".exe";
 
+            // Check the many scenarios this can fail.
+            if (!Game.ValidateSetBorderless(exePath, forceRun))
+                return;
+    
             // If an executable exists, launch it. If it doesn't, try to search for a string.
-            if (pathToGame.TestPath())
-                Game.LaunchExecutable(pathToGame);
+            if (exePath.TestPath())
+                Game.LaunchExecutable(exePath);
             if (BorderlessINI.SearchString != "")
                 Game.SearchForString(BorderlessINI.SearchString);
         }
@@ -88,23 +115,23 @@ namespace AutoBorderless
 
         private static void SearchForString(string searchString)
         {
-            // If the dialog is visible disable it until the loop has ended.
-            if (Forms.MainDialog != null)
-                Forms.MainDialog.Enabled = false;
+            // Define the handle pointer.
+            IntPtr hWnd = IntPtr.Zero;
 
-            // Attempt to set borderless via process name or window name.
-            for (int i = 0; i < Game.LoopCount; i++)
+            // Loop through all processes found and find by executable name or window title.
+            Process[] processes = Process.GetProcesses();
+            foreach (Process process in processes)
             {
-                if (Window.SetBorderlessString(searchString))
+                if (process.ProcessName == searchString)
+                    hWnd = process.MainWindowHandle;
+                else if (process.MainWindowTitle == searchString)
+                    hWnd = process.MainWindowHandle;
+                if (hWnd != IntPtr.Zero)
                     break;
-                if (Forms.MainDialog != null)
-                    Application.DoEvents();
-                Thread.Sleep(Game.LoopDelay);
             }
-            // If the dialog is visible open it back up for the user.
-            if (Forms.MainDialog != null)
-                Forms.MainDialog.Enabled = true;
+            // If the process exists try to set borderless window.
+            if (hWnd != IntPtr.Zero)
+                Window.SetBorderless(hWnd);
         }
-
     }
 }

@@ -30,10 +30,10 @@ namespace AutoBorderless
             string pathToGame = Config.BasePath + "\\" + BorderlessINI.Executable + ".exe";
 
             // Check to see if the path to the game is valid based on what is entered.
-            if (!pathToGame.TestPath())
+            if (!pathToGame.TestPath() | pathToGame == Config.AppPath)
             {
                 string Title = "Executable Not Found";
-                string Message = "The name entered in the \"Executable\" field is invalid. Please check the spelling and make sure it exists.";
+                string Message = "The value entered for \"Executable\" was not found. It must exist in the same path as this application.";
                 Forms.OkayDialog.Display(Title, Message, 260, 32, 24, 16, 10);
                 return;
             }

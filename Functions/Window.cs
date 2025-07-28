@@ -39,31 +39,6 @@ namespace AutoBorderless
             return false;
         }
 
-        public static bool SetBorderlessString(string searchString)
-        {
-            // Define the handle pointer.
-            IntPtr hWnd = IntPtr.Zero;
-
-            // Loop through all processes found and find by executable name or window title.
-            Process[] processes = Process.GetProcesses();
-            foreach (Process process in processes)
-            {
-                if (process.ProcessName == searchString)
-                    hWnd = process.MainWindowHandle;
-                else if (process.MainWindowTitle == searchString)
-                    hWnd = process.MainWindowHandle;
-                if (hWnd != IntPtr.Zero)
-                    break;
-            }
-            // The process doesn't exist so we exit.
-            if (hWnd == IntPtr.Zero)
-                return false;
-
-            // The process exists so try to set borderless window.
-            SetBorderless(hWnd);
-            return true;
-        }
-
         public static void SetBorderless(IntPtr hWnd)
         {
             // Get screen size (based on primary monitor)
