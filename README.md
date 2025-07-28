@@ -32,6 +32,7 @@ Most borderless window applications employ method 2, which always requires at le
 
 # Caveats/Shortcomings
 As with all my applications I like to cover any limitations.
+- The application you are attempting to apply borderless to must be in windowed mode.
 - Window to fullscreen borderless window stretches the image. It is not a resolution increase.
 - It may not work with all games or applications. Very limited testing has been done.
 
