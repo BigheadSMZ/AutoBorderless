@@ -9,7 +9,7 @@ namespace AutoBorderless
         static void Main()
         {
             // Set here for easy editing.
-            Config.Version = "1.0.0";
+            Config.Version = "1.1.0";
 
             // Enable form visual styles.
             Application.EnableVisualStyles();
