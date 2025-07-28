@@ -123,15 +123,16 @@
   <data name="Group_Executable.ToolTip" xml:space="preserve">
     <value>Enter the name of an executable here. This application
 must be in the same directory/folder as the executable.
-When launching AutoBorderless or pressing the Launch
-button, it will launch the executable, wait for a window
-to appear, and then attempt to apply borderless to it.</value>
+When launching AutoBorderless or when pressing the 
+"Borderless" button, it will launch the executable, wait 
+for the window, and attempt to apply borderless to it.</value>
   </data>
   <data name="Group_SearchString.ToolTip" xml:space="preserve">
-    <value>Enter an executable name or window title here, and
-either relaunch AutoBorderless or press the "Search"
-button to apply borderless window to a process that
-matches either the window title or process name.
+    <value>Enter an executable name or window title, 
+and either relaunch AutoBorderless or press 
+the "Borderless" button to apply borderless 
+window to a process that matches either the 
+window title or process/executable name.
 </value>
   </data>
   <data name="CheckBox_AlwaysShow.ToolTip" xml:space="preserve">
@@ -142,12 +143,23 @@ tasks automatically. Check this box to instead
 always show this menu. Deleting the INI file or
 blanking out the terms can also work.</value>
   </data>
+  <data name="Button_Launch.ToolTip" xml:space="preserve">
+    <value>Executable field:
+Attempt to launch the executable entered
+and apply borderless after it launches.
+
+Seach String field:
+Attempt to find a running process name
+or window title matching the search string 
+entered and apply borderless window to it.
+</value>
+  </data>
   <data name="Label_Info.Text" xml:space="preserve">
     <value>This application can work in one of two ways: 
 
-1.) Place this application in the same folder/directory as an executable and enter the name in the "Executable" section. Press the "Launch" button or close it out and relaunch it.
+1.) Place this application in the same folder/directory as an executable and enter the name in the "Executable" section. Press the "Borderless" button or close it out and relaunch it.
 
-2.) Apply borderless window to an open application using the name of the process (executable name) or window title. Press the "Search" button or close it out and relaunch it.
+2.) Apply borderless window to an open application using the name of the process (executable name) or window title. Press the "Borderless" button or close it out and relaunch it.
 
 The first method launches and applies borderless while the second searches for an open process to apply borderless to.
 </value>

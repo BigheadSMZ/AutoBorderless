@@ -103,9 +103,8 @@
             this.Button_Launch.Name = "Button_Launch";
             this.Button_Launch.Size = new System.Drawing.Size(98, 26);
             this.Button_Launch.TabIndex = 3;
-            this.Button_Launch.Text = "Launch";
-            this.MainTooltip.SetToolTip(this.Button_Launch, "Attempt to launch the executable entered\r\nand apply borderless after it launches." +
-        "");
+            this.Button_Launch.Text = "Set Borderless";
+            this.MainTooltip.SetToolTip(this.Button_Launch, resources.GetString("Button_Launch.ToolTip"));
             this.Button_Launch.UseVisualStyleBackColor = true;
             this.Button_Launch.Click += new System.EventHandler(this.Button_Launch_Click);
             // 
@@ -126,9 +125,8 @@
             this.Button_Search.Name = "Button_Search";
             this.Button_Search.Size = new System.Drawing.Size(99, 26);
             this.Button_Search.TabIndex = 5;
-            this.Button_Search.Text = "Search";
-            this.MainTooltip.SetToolTip(this.Button_Search, "Attempt to find a running process name\r\nor window title matching the search strin" +
-        "g \r\nentered and apply borderless window to it.");
+            this.Button_Search.Text = "-";
+            this.MainTooltip.SetToolTip(this.Button_Search, "This button will do something new soon.\r\n");
             this.Button_Search.UseVisualStyleBackColor = true;
             this.Button_Search.Click += new System.EventHandler(this.Button_Search_Click);
             // 
