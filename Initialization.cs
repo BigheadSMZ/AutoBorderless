@@ -21,6 +21,7 @@ namespace AutoBorderless
             // Initialize.
             BorderlessINI.Initialize();
             Forms.Initialize();
+            Game.Initialize();
 
             // Try to set borderless to something.
             Game.SetBorderless();

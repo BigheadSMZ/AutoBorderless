@@ -7,10 +7,21 @@ namespace AutoBorderless
 {
     internal class Game
     {
-        // When waiting for the window to appear, this sets the number of attempts to check 
-        // if the window is visible, and the duration between each iteration of the loop.
-        private static int MaxLoops = 100;
-        private static int LoopDelay = 50;
+        private static int LoopCount;
+        private static int LoopDelay;
+
+        public static void Initialize()
+        {
+            // Use the user defined values if applicable. Fall back to defaults if unavailable.
+            if (BorderlessINI.LoopCount != null && BorderlessINI.LoopCount != "")
+                Game.LoopCount = Convert.ToInt32(BorderlessINI.LoopCount);
+            else
+                Game.LoopCount = 100;
+            if (BorderlessINI.LoopDelay != null && BorderlessINI.LoopDelay != "")
+                Game.LoopDelay = Convert.ToInt32(BorderlessINI.LoopDelay);
+            else
+                Game.LoopDelay = 50;
+        }
 
         public static void SetBorderless(bool forceRun = false)
         {
@@ -36,7 +47,7 @@ namespace AutoBorderless
                 Game.SearchForString(BorderlessINI.SearchString);
         }
 
-        public static void LaunchExecutable(string gamePath)
+        private static void LaunchExecutable(string gamePath)
         {
             // Create and start the game process.
             FileItem gameItem = new FileItem(gamePath);
@@ -58,7 +69,7 @@ namespace AutoBorderless
                 Forms.MainDialog.Enabled = false;
 
             // Wait for the window to appear before trying to maximize.
-            for (int i = 0; i < Game.MaxLoops; i++)
+            for (int i = 0; i < Game.LoopCount; i++)
             {
                 if (Window.IsVisible(gameProcess))
                     break;
@@ -75,14 +86,14 @@ namespace AutoBorderless
                 Forms.MainDialog.Enabled = true;
         }
 
-        public static void SearchForString(string searchString)
+        private static void SearchForString(string searchString)
         {
             // If the dialog is visible disable it until the loop has ended.
             if (Forms.MainDialog != null)
                 Forms.MainDialog.Enabled = false;
 
             // Attempt to set borderless via process name or window name.
-            for (int i = 0; i < Game.MaxLoops; i++)
+            for (int i = 0; i < Game.LoopCount; i++)
             {
                 if (Window.SetBorderlessString(searchString))
                     break;
