@@ -69,7 +69,7 @@ namespace AutoBorderless
         {
             BorderlessINI.Executable = "";
             BorderlessINI.SearchString = "";
-            BorderlessINI.AlwaysShow = "false";
+            BorderlessINI.AlwaysShow = "true";
             BorderlessINI.HideHelp = "false";
             BorderlessINI.LoopCount = "100";
             BorderlessINI.LoopDelay = "50";
