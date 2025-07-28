@@ -199,7 +199,6 @@
         private System.Windows.Forms.GroupBox Group_Executable;
         private System.Windows.Forms.TextBox TextBox_Executable;
         private System.Windows.Forms.GroupBox Group_SearchString;
-        private System.Windows.Forms.TextBox TextBox_SearchString;
         private System.Windows.Forms.CheckBox CheckBox_AlwaysShow;
         private System.Windows.Forms.Button Button_Launch;
         private System.Windows.Forms.Button Button_Close;
@@ -208,6 +207,7 @@
         private System.Windows.Forms.Label Label_Info;
         private System.Windows.Forms.ToolTip MainTooltip;
         private System.Windows.Forms.Button Button_HideHelp;
+        private System.Windows.Forms.TextBox TextBox_SearchString;
     }
 }
 

@@ -29,6 +29,14 @@ namespace AutoBorderless
             if (Config.MenuShown & forceRun == false)
                 return false;
 
+            // There is a search string, so just don't try to launch the executable.
+            if (BorderlessINI.Executable == "" & BorderlessINI.SearchString != "")
+                return false;
+
+            // Executable path set but not valid and search string is not empty.
+            if (BorderlessINI.Executable != "" & !exePath.TestPath() & BorderlessINI.SearchString != "")
+                return false;
+
             // Launched from GUI and both fields are empty.
             if (forceRun & BorderlessINI.Executable == "" & BorderlessINI.SearchString == "")
             {
@@ -53,7 +61,6 @@ namespace AutoBorderless
                 Forms.OkayDialog.Display(Title, Message, 256, 32, 38, 26, 10);
                 return false;
             }
-
             // If none of that happened try to apply borderless.
             return true;
         }
@@ -63,14 +70,15 @@ namespace AutoBorderless
             // Assemble where the executable should be.
             string exePath = Config.BasePath + "\\" + BorderlessINI.Executable + ".exe";
 
-            // Check the many scenarios this can fail.
-            if (!Game.ValidateSetBorderless(exePath, forceRun))
-                return;
-    
-            // If an executable exists, launch it. If it doesn't, try to search for a string.
-            if (exePath.TestPath())
+            // Get the validation state of launching an executable.
+            bool Validate = (Game.ValidateSetBorderless(exePath, forceRun));
+
+            // If the "Executable" check passes validation attempt to launch it.
+            if (Validate)
                 Game.LaunchExecutable(exePath);
-            if (BorderlessINI.SearchString != "")
+
+            // If the "Search String" is not empty then attempt to find it.
+            if (!Validate & BorderlessINI.SearchString != "")
                 Game.SearchForString(BorderlessINI.SearchString);
         }
 
@@ -131,7 +139,15 @@ namespace AutoBorderless
             }
             // If the process exists try to set borderless window.
             if (hWnd != IntPtr.Zero)
+            {
                 Window.SetBorderless(hWnd);
+            }
+            else
+            {
+                string Title = "Process Not Found";
+                string Message = "A running process matching executable name or window title entered in \"Search String\" not found.";
+                Forms.OkayDialog.Display(Title, Message, 256, 32, 24, 16, 10);
+            }
         }
     }
 }
