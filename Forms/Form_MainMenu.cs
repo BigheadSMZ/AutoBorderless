@@ -19,7 +19,7 @@ namespace AutoBorderless
             this.Group_SearchString.Location = new Point(10,56);
             this.CheckBox_AlwaysShow.Location = new Point(10,117);
             this.Button_Launch.Location = new Point(9,142);
-            this.Button_Search.Location = new Point(116,142);
+            this.ButtonShortcut.Location = new Point(116,142);
             this.Button_Close.Location = new Point(224,142);
         }
 
@@ -59,9 +59,9 @@ namespace AutoBorderless
             Game.SetBorderless(true);
         }
 
-        private void Button_Search_Click(object sender, EventArgs e)
+        private void Button_Shortcut_Click(object sender, EventArgs e)
         {
-            
+            Forms.CreateShortcut();
         }
 
         private void Button_Close_Click(object sender, EventArgs e)

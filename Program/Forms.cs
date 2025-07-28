@@ -1,4 +1,7 @@
-﻿namespace AutoBorderless
+﻿using System;
+using IWshRuntimeLibrary;
+
+namespace AutoBorderless
 {
     internal class Forms
     {
@@ -16,6 +19,44 @@
 
                 // Update the INI file with new values.
                 BorderlessINI.WriteValues();
+            }
+        }
+
+        public static void CreateShortcut() 
+        {
+            // Assemble where the executable should be.
+            string pathToGame = Config.BasePath + "\\" + BorderlessINI.Executable + ".exe";
+
+            // Check to see if the path to the game is valid based on what is entered.
+            if (!pathToGame.TestPath())
+                return;
+
+            // Create a new openfolder dialog.
+            FolderSelectDialog folderDialog = new FolderSelectDialog();
+            folderDialog.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
+            folderDialog.Title = "Select Shortcut Destination";
+            folderDialog.Show();
+
+            // Store the file that was returned.
+            string recievedFolder = folderDialog.FileName;
+
+            // Make sure the folder has been set.
+            if (recievedFolder != "")
+            {
+                // Get the file as an item.
+                FileItem GameItem = new FileItem(pathToGame);
+
+                // Set the path to the shortcut.
+                string ShortcutPath = recievedFolder + "\\" + GameItem.BaseName + ".lnk";
+
+                // Use windows script host to create a shortcut.
+                WshShell WShell = new WshShell();
+                IWshShortcut WShortCut = (IWshShortcut)WShell.CreateShortcut(ShortcutPath);
+                WShortCut.TargetPath = Config.AppPath;
+                WShortCut.Arguments = "";
+                WShortCut.WorkingDirectory = Config.BasePath;
+                WShortCut.IconLocation = pathToGame;
+                WShortCut.Save();
             }
         }
     }

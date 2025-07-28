@@ -37,7 +37,7 @@
             this.CheckBox_AlwaysShow = new System.Windows.Forms.CheckBox();
             this.Button_Launch = new System.Windows.Forms.Button();
             this.Button_Close = new System.Windows.Forms.Button();
-            this.Button_Search = new System.Windows.Forms.Button();
+            this.ButtonShortcut = new System.Windows.Forms.Button();
             this.Group_Info = new System.Windows.Forms.GroupBox();
             this.Button_HideHelp = new System.Windows.Forms.Button();
             this.Label_Info = new System.Windows.Forms.Label();
@@ -119,16 +119,18 @@
             this.Button_Close.UseVisualStyleBackColor = true;
             this.Button_Close.Click += new System.EventHandler(this.Button_Close_Click);
             // 
-            // Button_Search
+            // ButtonShortcut
             // 
-            this.Button_Search.Location = new System.Drawing.Point(116, 330);
-            this.Button_Search.Name = "Button_Search";
-            this.Button_Search.Size = new System.Drawing.Size(99, 26);
-            this.Button_Search.TabIndex = 5;
-            this.Button_Search.Text = "-";
-            this.MainTooltip.SetToolTip(this.Button_Search, "This button will do something new soon.\r\n");
-            this.Button_Search.UseVisualStyleBackColor = true;
-            this.Button_Search.Click += new System.EventHandler(this.Button_Search_Click);
+            this.ButtonShortcut.Location = new System.Drawing.Point(116, 330);
+            this.ButtonShortcut.Name = "ButtonShortcut";
+            this.ButtonShortcut.Size = new System.Drawing.Size(99, 26);
+            this.ButtonShortcut.TabIndex = 5;
+            this.ButtonShortcut.Text = "Create Shortcut";
+            this.MainTooltip.SetToolTip(this.ButtonShortcut, "If the value set in \"Executable\" is valid, this \r\nbutton creates a shortcut in a " +
+        "target location \r\nselected by the user. The shortcut points to \r\nAutoBorderless," +
+        " not the original executable.");
+            this.ButtonShortcut.UseVisualStyleBackColor = true;
+            this.ButtonShortcut.Click += new System.EventHandler(this.Button_Shortcut_Click);
             // 
             // Group_Info
             // 
@@ -166,7 +168,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(331, 365);
             this.Controls.Add(this.Group_Info);
-            this.Controls.Add(this.Button_Search);
+            this.Controls.Add(this.ButtonShortcut);
             this.Controls.Add(this.Button_Close);
             this.Controls.Add(this.Button_Launch);
             this.Controls.Add(this.CheckBox_AlwaysShow);
@@ -179,6 +181,8 @@
             this.Name = "Form_MainMenu";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "AutoBorderless v*.*.*";
+            this.MainTooltip.SetToolTip(this, "If the value entered in the \r\n\"Executable\" field is valid, \r\ncreates Desktop shor" +
+        "tcut.");
             this.Load += new System.EventHandler(this.Form_MainMenu_Load);
             this.Group_Executable.ResumeLayout(false);
             this.Group_Executable.PerformLayout();
@@ -199,7 +203,7 @@
         private System.Windows.Forms.CheckBox CheckBox_AlwaysShow;
         private System.Windows.Forms.Button Button_Launch;
         private System.Windows.Forms.Button Button_Close;
-        private System.Windows.Forms.Button Button_Search;
+        private System.Windows.Forms.Button ButtonShortcut;
         private System.Windows.Forms.GroupBox Group_Info;
         private System.Windows.Forms.Label Label_Info;
         private System.Windows.Forms.ToolTip MainTooltip;
