@@ -23,7 +23,7 @@ namespace AutoBorderless
             // If an executable exists, launch it. If it doesn't, try to search for a string.
             if (pathToGame.TestPath())
                 Game.LaunchExecutable(pathToGame);
-            else if (BorderlessINI.SearchString != "")
+            if (BorderlessINI.SearchString != "")
                 Game.SearchForString(BorderlessINI.SearchString);
         }
 
