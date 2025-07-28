@@ -9,6 +9,7 @@ namespace AutoBorderless
         public static string  Executable;
         public static string  SearchString;
         public static string  AlwaysShow;
+        public static string  HideHelp;
 
         public static void Initialize()
         {
@@ -30,6 +31,7 @@ namespace AutoBorderless
             BorderlessINI.Executable = "";
             BorderlessINI.SearchString = "";
             BorderlessINI.AlwaysShow = "false";
+            BorderlessINI.HideHelp = "false";
             BorderlessINI.WriteValues();
         }
 
@@ -38,6 +40,7 @@ namespace AutoBorderless
             BorderlessINI.File.Write("Executable", BorderlessINI.Executable, "Application");
             BorderlessINI.File.Write("SearchString", BorderlessINI.SearchString, "Application");
             BorderlessINI.File.Write("AlwaysShow", BorderlessINI.AlwaysShow, "Application");
+            BorderlessINI.File.Write("HideHelp", BorderlessINI.HideHelp, "Application");
         }
 
         public static void LoadValues()
@@ -45,6 +48,7 @@ namespace AutoBorderless
             BorderlessINI.Executable = BorderlessINI.File.Read("Executable", "Application");
             BorderlessINI.SearchString = BorderlessINI.File.Read("SearchString", "Application");
             BorderlessINI.AlwaysShow = BorderlessINI.File.Read("AlwaysShow", "Application");
+            BorderlessINI.HideHelp = BorderlessINI.File.Read("HideHelp", "Application");
         }
     }
 }

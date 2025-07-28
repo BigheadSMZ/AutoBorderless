@@ -39,6 +39,7 @@
             this.Button_Close = new System.Windows.Forms.Button();
             this.Button_Search = new System.Windows.Forms.Button();
             this.Group_Info = new System.Windows.Forms.GroupBox();
+            this.Button_HideHelp = new System.Windows.Forms.Button();
             this.Label_Info = new System.Windows.Forms.Label();
             this.MainTooltip = new System.Windows.Forms.ToolTip(this.components);
             this.Group_Executable.SuspendLayout();
@@ -123,7 +124,7 @@
             // 
             this.Button_Search.Location = new System.Drawing.Point(116, 330);
             this.Button_Search.Name = "Button_Search";
-            this.Button_Search.Size = new System.Drawing.Size(98, 26);
+            this.Button_Search.Size = new System.Drawing.Size(99, 26);
             this.Button_Search.TabIndex = 5;
             this.Button_Search.Text = "Search";
             this.MainTooltip.SetToolTip(this.Button_Search, "Attempt to find a running process name\r\nor window title matching the search strin" +
@@ -133,6 +134,7 @@
             // 
             // Group_Info
             // 
+            this.Group_Info.Controls.Add(this.Button_HideHelp);
             this.Group_Info.Controls.Add(this.Label_Info);
             this.Group_Info.Location = new System.Drawing.Point(10, 2);
             this.Group_Info.Name = "Group_Info";
@@ -140,6 +142,17 @@
             this.Group_Info.TabIndex = 6;
             this.Group_Info.TabStop = false;
             this.Group_Info.Text = "Information";
+            // 
+            // Button_HideHelp
+            // 
+            this.Button_HideHelp.Location = new System.Drawing.Point(284, 8);
+            this.Button_HideHelp.Name = "Button_HideHelp";
+            this.Button_HideHelp.Size = new System.Drawing.Size(24, 24);
+            this.Button_HideHelp.TabIndex = 1;
+            this.Button_HideHelp.Text = "-";
+            this.MainTooltip.SetToolTip(this.Button_HideHelp, "Permanently hide the info pane.\r\nIt can be reenabled in the INI file.");
+            this.Button_HideHelp.UseVisualStyleBackColor = true;
+            this.Button_HideHelp.Click += new System.EventHandler(this.Button_HideHelp_Click);
             // 
             // Label_Info
             // 
@@ -168,6 +181,7 @@
             this.Name = "Form_MainMenu";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "AutoBorderless v*.*.*";
+            this.Load += new System.EventHandler(this.Form_MainMenu_Load);
             this.Group_Executable.ResumeLayout(false);
             this.Group_Executable.PerformLayout();
             this.Group_SearchString.ResumeLayout(false);
@@ -191,6 +205,7 @@
         private System.Windows.Forms.GroupBox Group_Info;
         private System.Windows.Forms.Label Label_Info;
         private System.Windows.Forms.ToolTip MainTooltip;
+        private System.Windows.Forms.Button Button_HideHelp;
     }
 }
 
