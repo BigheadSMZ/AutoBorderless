@@ -25,35 +25,29 @@ namespace AutoBorderless
 
         private static bool ValidateSetBorderless(string exePath, bool forceRun)
         {
-            // GUI was shown then closed. This check skips the launch in "Initialization".
+            // Silently fail on below errors.
             if (Config.MenuShown & forceRun == false)
                 return false;
-
-            // There is a search string, so just don't try to launch the executable.
             if (BorderlessINI.Executable == "" & BorderlessINI.SearchString != "")
                 return false;
-
-            // Executable path set but not valid and search string is not empty.
-            if (BorderlessINI.Executable != "" & !exePath.TestPath() & BorderlessINI.SearchString != "")
+            if (BorderlessINI.Executable != "" & BorderlessINI.SearchString != "" & !exePath.TestPath() )
                 return false;
 
-            // Launched from GUI and both fields are empty.
-            if (forceRun & BorderlessINI.Executable == "" & BorderlessINI.SearchString == "")
+            // Fail with error message on below errors.
+            if (BorderlessINI.Executable == "" & BorderlessINI.SearchString == "" & forceRun)
             {
                 string Title = "Values Empty";
                 string Message = "You must either enter the name of an executable to launch or an executable/window title to search for.";
                 Forms.OkayDialog.Display(Title, Message, 260, 32, 24, 16, 10);
                 return false;
             }
-            // Executable path set but not valid and search string is empty.
-            if (BorderlessINI.Executable != "" & !exePath.TestPath() & BorderlessINI.SearchString == "")
+            if (BorderlessINI.Executable != "" & BorderlessINI.SearchString == "" & !exePath.TestPath() )
             {
                 string Title = "Executable Not Found";
                 string Message = "The value entered for \"Executable\" was not found. It must exist in the same path as this application.";
                 Forms.OkayDialog.Display(Title, Message, 256, 32, 24, 16, 10);
                 return false;
             }
-            // The path to the executable is this application.
             if (exePath == Config.AppPath)
             {
                 string Title = "Nope Not Happening";
@@ -67,17 +61,17 @@ namespace AutoBorderless
 
         public static void SetBorderless(bool forceRun = false)
         {
-            // Assemble where the executable should be.
+            // Assemble potential executable path.
             string exePath = Config.BasePath + "\\" + BorderlessINI.Executable + ".exe";
 
-            // Get the validation state of launching an executable.
+            // Store validation result.
             bool Validate = (Game.ValidateSetBorderless(exePath, forceRun));
 
-            // If the "Executable" check passes validation attempt to launch it.
+            // If validation passed, launch executable.
             if (Validate)
                 Game.LaunchExecutable(exePath);
 
-            // If the "Search String" is not empty then attempt to find it.
+            // If validation failed and search string is set, find matching process.
             if (!Validate & BorderlessINI.SearchString != "")
                 Game.SearchForString(BorderlessINI.SearchString);
         }
