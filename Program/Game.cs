@@ -9,6 +9,8 @@ namespace AutoBorderless
     {
         private static int LoopCount;
         private static int LoopDelay;
+        private static Thread Running;
+        public static IntPtr gprocID = IntPtr.Zero;
 
         public static void Initialize()
         {
@@ -78,6 +80,37 @@ namespace AutoBorderless
 
         private static void LaunchExecutable(string gamePath)
         {
+            // Starts the game in a new thread.
+            Game.Running = new Thread(() => StartThread(gamePath));
+            Game.Running.Start();
+
+            // Hang around until the game actually starts.
+            for (int i = 0; i < Game.LoopCount; i++)
+            {
+                if (Game.gprocID != IntPtr.Zero)
+                    break;
+                Thread.Sleep(Game.LoopDelay);
+            }
+            // If the dialog is visible disable it until the loop has ended.
+            if (Forms.MainDialog != null)
+                Forms.MainDialog.Enabled = false;
+
+            if (BorderlessINI.ScreenMethod == "1")
+            {
+                Forms.CopyDialog = new Form_CopyMenu(Game.gprocID);
+                Forms.CopyDialog.ShowDialog();
+            }
+            else
+            {
+                Window.SetBorderless(Game.gprocID);
+            }
+            // If the dialog is visible open it back up for the user.
+            if (Forms.MainDialog != null)
+                Forms.MainDialog.Enabled = true;
+        }
+
+        private static void StartThread(string gamePath)
+        {
             // Create and start the game process.
             FileItem gameItem = new FileItem(gamePath);
             Process gameProcess = new Process();
@@ -93,48 +126,37 @@ namespace AutoBorderless
             gameProcess.StartInfo = startInfo;
             gameProcess.Start();
 
-            // If the dialog is visible disable it until the loop has ended.
-            if (Forms.MainDialog != null)
-                Forms.MainDialog.Enabled = false;
-
             // Wait for the window to appear before trying to maximize.
             for (int i = 0; i < Game.LoopCount; i++)
             {
                 if (Window.IsVisible(gameProcess))
                     break;
-                if (Forms.MainDialog != null)
-                    Application.DoEvents();
                 Thread.Sleep(Game.LoopDelay);
             }
-            // Apply borderless to the window.
-            IntPtr hWnd = gameProcess.MainWindowHandle;
-            Window.SetBorderless(hWnd);
-
-            // If the dialog is visible open it back up for the user.
-            if (Forms.MainDialog != null)
-                Forms.MainDialog.Enabled = true;
+            // Get the handle only while the game is running.
+            Game.gprocID = gameProcess.MainWindowHandle;
+            gameProcess.WaitForExit();
+            Game.gprocID = IntPtr.Zero;
+            Game.Running = null;
         }
 
         private static void SearchForString(string searchString)
         {
-            // Define the handle pointer.
-            IntPtr hWnd = IntPtr.Zero;
-
             // Loop through all processes found and find by executable name or window title.
             Process[] processes = Process.GetProcesses();
             foreach (Process process in processes)
             {
                 if (process.ProcessName == searchString)
-                    hWnd = process.MainWindowHandle;
+                    Game.gprocID = process.MainWindowHandle;
                 else if (process.MainWindowTitle == searchString)
-                    hWnd = process.MainWindowHandle;
-                if (hWnd != IntPtr.Zero)
+                    Game.gprocID = process.MainWindowHandle;
+                if (Game.gprocID != IntPtr.Zero)
                     break;
             }
             // If the process exists try to set borderless window.
-            if (hWnd != IntPtr.Zero)
+            if (Game.gprocID != IntPtr.Zero)
             {
-                Window.SetBorderless(hWnd);
+                Window.SetBorderless(Game.gprocID);
             }
             else
             {

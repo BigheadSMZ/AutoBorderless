@@ -7,6 +7,7 @@ namespace AutoBorderless
     {
         public static Form_MainMenu MainDialog = null;
         public static Form_OkayMenu OkayDialog = null;
+        public static Form_WinClone WindowClone = null;
 
         public static void Initialize()
         {

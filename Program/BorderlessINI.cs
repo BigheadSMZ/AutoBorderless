@@ -13,12 +13,14 @@ namespace AutoBorderless
         public static string Executable;
         public static string SearchString;
         public static string AlwaysShow;
+        public static string ScreenMethod;
         public static string HideHelp;
         public static List<string> ApplicationList = new List<string>
         {
             "Executable", 
             "SearchString", 
             "AlwaysShow", 
+            "ScreenMethod", 
             "HideHelp"
         };
         // Advanced Section.
@@ -70,6 +72,7 @@ namespace AutoBorderless
             BorderlessINI.Executable = "";
             BorderlessINI.SearchString = "";
             BorderlessINI.AlwaysShow = "true";
+            BorderlessINI.ScreenMethod = "0";
             BorderlessINI.HideHelp = "false";
             BorderlessINI.LoopCount = "100";
             BorderlessINI.LoopDelay = "50";
@@ -80,6 +83,7 @@ namespace AutoBorderless
             BorderlessINI.Executable = BorderlessINI.File.Read("Executable", "Application");
             BorderlessINI.SearchString = BorderlessINI.File.Read("SearchString", "Application");
             BorderlessINI.AlwaysShow = BorderlessINI.File.Read("AlwaysShow", "Application");
+            BorderlessINI.ScreenMethod = BorderlessINI.File.Read("ScreenMethod", "Application");
             BorderlessINI.HideHelp = BorderlessINI.File.Read("HideHelp", "Application");
             BorderlessINI.LoopCount = BorderlessINI.File.Read("LoopCount", "Advanced");
             BorderlessINI.LoopDelay = BorderlessINI.File.Read("LoopDelay", "Advanced");
@@ -90,6 +94,7 @@ namespace AutoBorderless
             BorderlessINI.File.Write("Executable", BorderlessINI.Executable, "Application");
             BorderlessINI.File.Write("SearchString", BorderlessINI.SearchString, "Application");
             BorderlessINI.File.Write("AlwaysShow", BorderlessINI.AlwaysShow, "Application");
+            BorderlessINI.File.Write("ScreenMethod", BorderlessINI.ScreenMethod, "Application");
             BorderlessINI.File.Write("HideHelp", BorderlessINI.HideHelp, "Application");
             BorderlessINI.File.Write("LoopCount", BorderlessINI.LoopCount, "Advanced");
             BorderlessINI.File.Write("LoopDelay", BorderlessINI.LoopDelay, "Advanced");
